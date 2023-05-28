@@ -10,7 +10,7 @@ file(GLOB META_SRC_FILES
 )
 
 include_directories(include)
-add_compile_options(-Wall -Wextra -Wpedantic -Isystem)
+add_compile_options(-Wall -Wextra -Wpedantic)
 
 # set(META_SRC_FILES 
 #     test.cpp

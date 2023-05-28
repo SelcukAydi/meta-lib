@@ -4,7 +4,12 @@ TC_BEGIN(ExtractFirstError, 0)
 {
     // Declaring an error extracted from ExtractFirstError explicity.
     //
-    sia::meta::ExtractFirstError::apply<sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>>::type error;
+    using Result =
+        sia::meta::ExtractFirstError::apply<sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>>::type;
+
+    // Result should be an error.
+    //
+    static_assert(sia::meta::Exec<sia::meta::IsError(Result)>::type::value);
 }
 
 TC_BEGIN(ExtractFirstError, 1)
@@ -30,7 +35,7 @@ TC_BEGIN(ExtractFirstError, 2)
     // There should not be no any error in the type list.
     //
     using Check = sia::meta::ExtractFirstError::apply<std::false_type, std::integral_constant<std::size_t, 99>>::type;
-    
+
     static_assert(std::is_same_v<sia::meta::None, Check>);
 }
 
@@ -41,7 +46,7 @@ TC_BEGIN(ExtractFirstError, 3)
     using ExtractedError =
         sia::meta::ExtractFirstError::apply<std::false_type, std::integral_constant<std::size_t, 99>,
                                             sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>>::type;
-    
+
     static_assert(!std::is_same_v<sia::meta::None, ExtractedError>);
 }
 
