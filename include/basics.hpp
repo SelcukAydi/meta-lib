@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <type_traits>
 
 struct Type
@@ -13,10 +14,21 @@ struct Type
 
 struct If {};
 
+template<std::int32_t n>
+struct Integer
+{
+    static constexpr std::int32_t value = n;
+};
+
+template<bool val>
+struct Bool
+{
+    static constexpr bool value = val;
+};
+
 struct RemoveReference
 {
-    template<typename T>
-    struct apply
+    template<typename T> struct apply
     {
         using type = std::remove_reference_t<T>;
     };

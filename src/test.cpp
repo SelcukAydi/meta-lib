@@ -63,8 +63,14 @@ struct RecursiveMetaFunctor
     };
 };
 
+extern void TestCaseVector1();
+extern void TestCaseVector6();
+
+
 int main()
 {
+    TestCaseVector1();
+    TestCaseVector6();
 
     return 0;
 }

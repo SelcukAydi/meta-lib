@@ -192,4 +192,4 @@ struct ExtractFirstError
     };
 };
 
-};  // namespace sia::meta
+}  // namespace sia::meta
