@@ -193,4 +193,28 @@ struct VectorGetNThElement
     };
 };
 
+struct FindMax
+{
+    template <typename... Ts>
+    struct apply
+    {
+        template<typename... Items>
+        struct apply_helper;
+
+        template <typename MaxT, typename Item, typename... Tail>
+        struct apply_helper<MaxT, Item, Tail...>
+        {
+            using type = std::conditional_t<(MaxT::value < Item::value),typename  apply_helper<Item, Tail...>::type,
+                                            typename apply_helper<MaxT, Tail...>::type>;
+        };
+
+        template<typename MaxT>
+        struct apply_helper<MaxT>
+        {
+            using type = MaxT;
+        };
+
+        using type = typename apply_helper<Ts...>::type;
+    };
+};
 }  // namespace sia::meta::detail

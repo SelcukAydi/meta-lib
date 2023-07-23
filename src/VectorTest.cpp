@@ -91,5 +91,10 @@ TC_BEGIN(Vector, 9)
     static_assert(std::is_same_v<DummyType, Result>, "Second item must be DummyType!");
 }
 
+TC_BEGIN(Vector, 10)
+{
+    using Result = sia::meta::Exec<sia::meta::detail::FindMax(std::integral_constant<int, 1>, std::integral_constant<int, 2>, std::integral_constant<int, 3>)>::type;
+    static_assert(Result::value == 3, "Max item must be 3!");
+}
 
 
