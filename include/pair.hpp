@@ -42,4 +42,4 @@ struct GetSecond
     };
 };
 
-};  // namespace sia::meta::detail
+}  // namespace sia::meta::detail
