@@ -54,8 +54,9 @@ struct ConversionMatrixRemovePair
                   typename... Items>
         struct helper<ConversionVector<Items...>, CurrentPair<First, Second>>
         {
-            using type = std::conditional_t<std::is_same_v<RemoveT, CurrentPair<First, Second>>, ConversionVector<Items...>, 
-                ConversionVector<CurrentPair<First, Second>, Items...>>;
+            using type =
+                std::conditional_t<std::is_same_v<RemoveT, CurrentPair<First, Second>>, ConversionVector<Items...>,
+                                   ConversionVector<CurrentPair<First, Second>, Items...>>;
         };
 
         template <typename First, typename Second, template <typename, typename> typename CurrentPair,
@@ -63,11 +64,25 @@ struct ConversionMatrixRemovePair
         struct helper<ConversionVector<Items...>, CurrentPair<First, Second>, PairPack...>
         {
             using type = std::conditional_t<
-                std::is_same_v<RemoveT, CurrentPair<First, Second>>, typename helper<ConversionVector<Items...>, PairPack...>::type,
+                std::is_same_v<RemoveT, CurrentPair<First, Second>>,
+                typename helper<ConversionVector<Items...>, PairPack...>::type,
                 typename helper<ConversionVector<CurrentPair<First, Second>, Items...>, PairPack...>::type>;
         };
 
         using type = typename helper<ConversionVector<>, Pairs...>::type;
+    };
+};
+
+struct ConversionVectorAddPair
+{
+    template <typename... Ts>
+    struct apply;
+
+    template <typename AddT, typename... Pairs>
+    struct apply<AddT, ConversionVector<Pairs...>>
+    {
+        using type = std::conditional_t< !std::is_same_v< typename FindPair::template apply<AddT, ConversionVector<Pairs...>>::type, sia::meta::None>,
+                                                 ConversionVector<Pairs...>, ConversionVector<Pairs..., AddT>>;
     };
 };
 
