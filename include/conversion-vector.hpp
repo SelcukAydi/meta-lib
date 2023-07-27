@@ -39,4 +39,36 @@ struct FindPair
     };
 };
 
+struct ConversionMatrixRemovePair
+{
+    template <typename... Ts>
+    struct apply;
+
+    template <typename RemoveT, typename... Pairs>
+    struct apply<RemoveT, ConversionVector<Pairs...>>
+    {
+        template <typename... Ts>
+        struct helper;
+
+        template <typename First, typename Second, template <typename, typename> typename CurrentPair,
+                  typename... Items>
+        struct helper<ConversionVector<Items...>, CurrentPair<First, Second>>
+        {
+            using type = std::conditional_t<std::is_same_v<RemoveT, CurrentPair<First, Second>>, ConversionVector<Items...>, 
+                ConversionVector<CurrentPair<First, Second>, Items...>>;
+        };
+
+        template <typename First, typename Second, template <typename, typename> typename CurrentPair,
+                  typename... PairPack, typename... Items>
+        struct helper<ConversionVector<Items...>, CurrentPair<First, Second>, PairPack...>
+        {
+            using type = std::conditional_t<
+                std::is_same_v<RemoveT, CurrentPair<First, Second>>, typename helper<ConversionVector<Items...>, PairPack...>::type,
+                typename helper<ConversionVector<CurrentPair<First, Second>, Items...>, PairPack...>::type>;
+        };
+
+        using type = typename helper<ConversionVector<>, Pairs...>::type;
+    };
+};
+
 }  // namespace sia::meta::detail
