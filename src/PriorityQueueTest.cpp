@@ -1,7 +1,7 @@
 #include <type_traits>
-#include "exec.hpp"
-#include "meta-basics.hpp"
-#include "priority-queue.hpp"
+#include "detail/exec.hpp"
+#include "detail/meta-basics.hpp"
+#include "detail/priority-queue.hpp"
 
 TC_BEGIN(PQ, 1)
 {

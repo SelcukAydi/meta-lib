@@ -1,9 +1,9 @@
 #include <cstddef>
 #include <type_traits>
-#include "basics.hpp"
-#include "exec.hpp"
-#include "meta-basics.hpp"
-#include "vector.hpp"
+#include "detail/basics.hpp"
+#include "detail/exec.hpp"
+#include "detail/meta-basics.hpp"
+#include "detail/vector.hpp"
 
 using namespace sia::meta::detail;
 

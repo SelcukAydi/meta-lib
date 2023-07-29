@@ -1,7 +1,7 @@
 #include <type_traits>
-#include "exec.hpp"
-#include "meta-basics.hpp"
-#include "set.hpp"
+#include "detail/exec.hpp"
+#include "detail/meta-basics.hpp"
+#include "detail/set.hpp"
 
 TC_BEGIN(Set, 1)
 {

@@ -1,6 +1,6 @@
 #include <type_traits>
-#include "fold.hpp"
-#include "meta-basics.hpp"
+#include "detail/fold.hpp"
+#include "detail/meta-basics.hpp"
 
 struct VoidFunctor
 {

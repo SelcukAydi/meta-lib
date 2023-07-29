@@ -1,9 +1,9 @@
 #include <type_traits>
-#include "exec.hpp"
-#include "foreach.hpp"
-#include "meta-basics.hpp"
-#include "set.hpp"
-#include "vector.hpp"
+#include "detail/exec.hpp"
+#include "detail/foreach.hpp"
+#include "detail/meta-basics.hpp"
+#include "detail/set.hpp"
+#include "detail/vector.hpp"
 
 struct IdentityFunctor
 {
