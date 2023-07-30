@@ -10,15 +10,6 @@
 namespace sia::meta::detail
 {
 
-// TODO(selcuk): List of things to be implemented!
-// - IsInVector
-// - VectorSize
-// - PushFront
-// - PushBack
-// - ConcatVectors
-// - VectorRemoveFirstN
-// - VectorEndsWith
-
 template <typename... Types>
 struct Vector
 {
