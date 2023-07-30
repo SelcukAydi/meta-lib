@@ -7,6 +7,7 @@ namespace sia::meta::detail
 template <int N>
 struct Integral
 {
+    static constexpr int value = N;
     using type = std::integral_constant<int, N>;
 };
 

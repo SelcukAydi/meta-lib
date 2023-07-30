@@ -1,5 +1,6 @@
 #include "detail/vector.hpp"
 #include "detail/meta-basics.hpp"
+#include "detail/integral.hpp"
 #include <gtest/gtest.h>
 
 using namespace sia::meta::detail;
@@ -69,7 +70,7 @@ TEST(Vector, 6)
 TEST(Vector, 7)
 {
     using V1 = sia::meta::detail::Vector<std::false_type, DummyType, std::true_type>;
-    using Result = sia::meta::Exec<sia::meta::detail::VectorRemoveFirstN(sia::meta::Integer<1>, V1)>::type;
+    using Result = sia::meta::Exec<sia::meta::detail::VectorRemoveFirstN(sia::meta::detail::Integral<1>, V1)>::type;
     using ResultSize = sia::meta::Exec<sia::meta::detail::VectorSize(Result)>::type;
     static_assert(ResultSize::value == 2, "Remaining number of items must be 2!");
 }
@@ -85,7 +86,7 @@ TEST(Vector, 8)
 TEST(Vector, 9)
 {
     using V1 = sia::meta::detail::Vector<std::false_type, DummyType, std::true_type>;
-    using Result = sia::meta::Exec<sia::meta::detail::VectorGetNThElement(sia::meta::Integer<1>, V1)>::type;
+    using Result = sia::meta::Exec<sia::meta::detail::VectorGetNThElement(sia::meta::detail::Integral<1>, V1)>::type;
     static_assert(std::is_same_v<DummyType, Result>, "Second item must be DummyType!");
 }
 

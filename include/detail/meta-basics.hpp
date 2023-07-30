@@ -3,18 +3,14 @@
 #include <type_traits>
 #include <string_view>
 
-#define TC_BEGIN(prefix, testNumber) void TestCase##prefix##testNumber()
-
 namespace sia::meta
 {
 struct If
 {
 };
 
-template <std::int32_t n>
-struct Integer
+struct None
 {
-    static constexpr std::int32_t value = n;
 };
 
 template <bool val>
@@ -147,9 +143,6 @@ struct IsError::apply<Error<ErrorTag, ErrorArgs...>>
     using type = std::true_type;
 };
 
-struct None
-{
-};
 
 struct ExtractFirstErrorImpl
 {
@@ -184,6 +177,8 @@ struct ExtractFirstError
     };
 };
 
+// TODO(selcuk): Move this to type traits.
+//
 struct HasPrintMethod
 {
     template <typename T, typename = std::void_t<>>
