@@ -1,4 +1,6 @@
-#include <detail/exec.hpp>
+#include "detail/exec.hpp"
+
+#include <gtest/gtest.h>
 
 struct EmptyMetaFunctor
 {
@@ -59,15 +61,7 @@ struct RecursiveMetaFunctor
     };
 };
 
-TC_BEGIN(ExecTest, 0)
-{
-    // Call meta function with single parameter.
-    //
-    using Result = sia::meta::Exec<SimpleMetaFunctor(std::true_type)>::type;
-    static_assert(Result::value == 11);
-}
-
-TC_BEGIN(ExecTest, 1)
+TEST(ExecutorTest, 0)
 {
     // Call meta function with two parameters.
     //
@@ -75,7 +69,15 @@ TC_BEGIN(ExecTest, 1)
     static_assert(Result::value == 11);
 }
 
-TC_BEGIN(ExecTest, 2)
+TEST(ExecutorTest, 1)
+{
+    // Call meta function with two parameters.
+    //
+    using Result = sia::meta::Exec<SimpleMetaFunctor(std::true_type, std::false_type)>::type;
+    static_assert(Result::value == 11);
+}
+
+TEST(ExecutorTest, 2)
 {
     // Call SelfRecursiveMetaFunctor once. SelfRecursiveMetaFunctor returns a functor
     // but its signature is not like F() that's why Exec won't execute the returned value.
@@ -88,8 +90,7 @@ TC_BEGIN(ExecTest, 2)
 
     static_assert(Result::value == 12);
 }
-
-TC_BEGIN(ExecTest, 3)
+TEST(ExecutorTest, 3)
 {
     // Call the RecursiveMetaFunctor that returns another meta function. The second
     // meta function is executed by the Exec automaticaly.
@@ -98,8 +99,7 @@ TC_BEGIN(ExecTest, 3)
 
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 4)
+TEST(ExecutorTest, 4)
 {
     // First the FactoryMetaFunctor() is executed then its returned type is executed
     // as a parameter given to RecursiveMetaFunctor.
@@ -108,21 +108,19 @@ TC_BEGIN(ExecTest, 4)
     static_assert(Result::value);
 }
 
-TC_BEGIN(ExecTest, 5)
+TEST(ExecutorTest, 5)
 {
     // Executes the If meta function.
     //
     using Result = sia::meta::Exec<sia::meta::If(EmptyMetaFunctor(), std::true_type, std::false_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 6)
+TEST(ExecutorTest, 6)
 {
     using Result = sia::meta::Exec<sia::meta::If(EmptyMetaFunctor(), std::false_type, std::true_type)>::type;
     static_assert(!Result::value);
 }
-
-TC_BEGIN(ExecTest, 7)
+TEST(ExecutorTest, 7)
 {
     // Execute the If statement first then SelfRecursiveMetaFunctor meta function.
     // The returned type has to be executed again.
@@ -136,51 +134,44 @@ TC_BEGIN(ExecTest, 7)
 
     static_assert(Result2::value == 12);
 }
-
-TC_BEGIN(ExecTest, 8)
+TEST(ExecutorTest, 8)
 {
     using Result = sia::meta::Exec<sia::meta::And(std::true_type)>::type;
 
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 9)
+TEST(ExecutorTest, 9)
 {
     using Result = sia::meta::Exec<sia::meta::And(std::true_type, std::true_type)>::type;
 
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 10)
+TEST(ExecutorTest, 10)
 {
     using Result = sia::meta::Exec<sia::meta::And(std::true_type, std::false_type)>::type;
 
     static_assert(!Result::value);
 }
-
-TC_BEGIN(ExecTest, 11)
+TEST(ExecutorTest, 11)
 {
     using Result =
         sia::meta::Exec<sia::meta::And(std::true_type, std::true_type, std::true_type, std::false_type)>::type;
 
     static_assert(!Result::value);
 }
-
-TC_BEGIN(ExecTest, 12)
+TEST(ExecutorTest, 12)
 {
     using Result = sia::meta::Exec<sia::meta::If(sia::meta::And(EmptyMetaFunctor(), std::true_type), std::true_type,
                                                  std::false_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 13)
-{
+TEST(ExecutorTest, 13)
+{ 
     using Result = sia::meta::Exec<sia::meta::If(sia::meta::And(EmptyMetaFunctor(), std::false_type), std::true_type,
                                                  std::false_type)>::type;
     static_assert(!Result::value);
 }
-
-TC_BEGIN(ExecTest, 14)
+TEST(ExecutorTest, 14)
 {
     // Empty And should always return true type.
     //
@@ -188,59 +179,51 @@ TC_BEGIN(ExecTest, 14)
 
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 15)
+TEST(ExecutorTest, 15)
 {
     using Result = sia::meta::Exec<sia::meta::Or(std::true_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 16)
+TEST(ExecutorTest, 16)
 {
     using Result = sia::meta::Exec<sia::meta::Or(std::true_type, std::true_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 17)
+TEST(ExecutorTest, 17)
 {
     using Result = sia::meta::Exec<sia::meta::Or(std::true_type, std::false_type)>::type;
     static_assert(Result::value);
 }
 
-TC_BEGIN(ExecTest, 18)
+TEST(ExecutorTest, 18)
 {
     using Result =
         sia::meta::Exec<sia::meta::Or(std::true_type, std::true_type, std::true_type, std::false_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 19)
+TEST(ExecutorTest, 19)
 {
     using Check22 = sia::meta::Exec<sia::meta::If(sia::meta::Or(EmptyMetaFunctor(), std::true_type), std::true_type,
                                                   std::false_type)>::type;
     static_assert(Check22::value);
 }
-
-TC_BEGIN(ExecTest, 20)
+TEST(ExecutorTest, 20)
 {
     using Result = sia::meta::Exec<sia::meta::If(sia::meta::Or(EmptyMetaFunctor(), std::false_type), std::true_type,
                                                  std::false_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 21)
+TEST(ExecutorTest, 21)
 {
     using Result = sia::meta::Exec<sia::meta::Or()>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 22)
+TEST(ExecutorTest, 22)
 {
     using Result = sia::meta::Exec<sia::meta::Not(std::false_type)>::type;
     static_assert(Result::value);
 }
-
-TC_BEGIN(ExecTest, 23)
+TEST(ExecutorTest, 23)
 {
     // Won't compile. Assertion will fail.
     //

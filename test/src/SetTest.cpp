@@ -1,16 +1,14 @@
-#include <type_traits>
-#include "detail/exec.hpp"
-#include "detail/meta-basics.hpp"
 #include "detail/set.hpp"
+#include <gtest/gtest.h>
 
-TC_BEGIN(Set, 1)
+TEST(Set, 1)
 {
     using Set1 = sia::meta::detail::Set<std::false_type, std::true_type>;
     using Result = sia::meta::Exec<sia::meta::detail::SetContains(std::true_type, Set1)>::type;
     static_assert(Result::value, "Set1 must contain true_type!");
 }
 
-TC_BEGIN(Set, 2)
+TEST(Set, 2)
 {
     using Set1 = sia::meta::detail::Set<std::false_type, std::true_type>;
     using Result = sia::meta::Exec<sia::meta::detail::SetCheckIfUnique(Set1)>::type;
@@ -29,7 +27,7 @@ TC_BEGIN(Set, 2)
     static_assert(!Result4::value, "");
 }
 
-TC_BEGIN(Set, 3)
+TEST(Set, 3)
 {
     using Set1 = sia::meta::detail::Set<std::false_type, std::true_type>;
     using Result = sia::meta::Exec<sia::meta::detail::SetInsert(int, Set1)>::type;
@@ -40,7 +38,7 @@ TC_BEGIN(Set, 3)
     static_assert(std::is_same_v<Set2, Result2>, "Result should not have true_type again!");
 }
 
-TC_BEGIN(Set, 4)
+TEST(Set, 4)
 {
     using Set1 = sia::meta::detail::Set<std::false_type, std::true_type, int>;
     using Result = sia::meta::detail::SetRemove::apply<int, Set1>::type;

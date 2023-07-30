@@ -1,6 +1,5 @@
-#include <type_traits>
 #include "detail/fold.hpp"
-#include "detail/meta-basics.hpp"
+#include <gtest/gtest.h>
 
 struct VoidFunctor
 {
@@ -20,7 +19,7 @@ struct VoidFunctor
     };
 };
 
-TC_BEGIN(Fold, 1)
+TEST(Fold, 0)
 {
     using Result = sia::meta::detail::Fold::apply<VoidFunctor, double, float, char, bool>::type;
     static_assert(std::is_same_v<char, Result>, "");

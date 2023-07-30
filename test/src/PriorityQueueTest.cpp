@@ -1,9 +1,7 @@
-#include <type_traits>
-#include "detail/exec.hpp"
-#include "detail/meta-basics.hpp"
 #include "detail/priority-queue.hpp"
+#include <gtest/gtest.h>
 
-TC_BEGIN(PQ, 1)
+TEST(PQ, 1)
 {
     using Q1 = sia::meta::detail::PriorityQueue<std::integral_constant<int, 3>, std::integral_constant<int, 1>,
                                                 std::integral_constant<int, 2>>;
@@ -13,7 +11,7 @@ TC_BEGIN(PQ, 1)
     static_assert(Result::top::value == 4, "Maximum item must be 4!");
 }
 
-TC_BEGIN(PQ, 2)
+TEST(PQ, 2)
 {
     using Q1 = sia::meta::detail::PriorityQueue<std::integral_constant<int, 3>, std::integral_constant<int, 1>,
                                                 std::integral_constant<int, 2>>;
@@ -24,7 +22,7 @@ TC_BEGIN(PQ, 2)
     static_assert(std::is_same_v<Result, Expected>, "Top priority 3 must be removed from the queue!");
 }
 
-TC_BEGIN(PQ, 3)
+TEST(PQ, 3)
 {
     using Q1 = sia::meta::detail::PriorityQueue<std::integral_constant<int, 3>, std::integral_constant<int, 1>,
                                                 std::integral_constant<int, 2>>;

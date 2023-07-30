@@ -1,6 +1,7 @@
-#include <detail/exec.hpp>
+#include "detail/exec.hpp"
+#include <gtest/gtest.h>
 
-TC_BEGIN(ExtractFirstError, 0)
+TEST(ExtractFirstError, 0)
 {
     // Declaring an error extracted from ExtractFirstError explicity.
     //
@@ -12,7 +13,7 @@ TC_BEGIN(ExtractFirstError, 0)
     static_assert(sia::meta::Exec<sia::meta::IsError(Result)>::type::value);
 }
 
-TC_BEGIN(ExtractFirstError, 1)
+TEST(ExtractFirstError, 1)
 {
     // Extracting the first error from the executed metafunction's output.
     //
@@ -30,7 +31,7 @@ TC_BEGIN(ExtractFirstError, 1)
     static_assert(Check::value);
 }
 
-TC_BEGIN(ExtractFirstError, 2)
+TEST(ExtractFirstError, 2)
 {
     // There should not be no any error in the type list.
     //
@@ -39,7 +40,7 @@ TC_BEGIN(ExtractFirstError, 2)
     static_assert(std::is_same_v<sia::meta::None, Check>);
 }
 
-TC_BEGIN(ExtractFirstError, 3)
+TEST(ExtractFirstError, 3)
 {
     // The error is at the end of the type list.
     //
@@ -50,7 +51,7 @@ TC_BEGIN(ExtractFirstError, 3)
     static_assert(!std::is_same_v<sia::meta::None, ExtractedError>);
 }
 
-TC_BEGIN(ExtractFirstError, 4)
+TEST(ExtractFirstError, 4)
 {
     // The error is at the middle of the type list.
     //
@@ -60,11 +61,11 @@ TC_BEGIN(ExtractFirstError, 4)
                                             std::integral_constant<std::size_t, 99>>::type;
 
     // Assert that if this is the correct error.
-    //
+    //ac
     static_assert(std::is_same_v<sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>, ExtractedError>);
 }
 
-TC_BEGIN(ExtractFirstError, 5)
+TEST(ExtractFirstError, 5)
 {
     // Two errors in the list.
     //
@@ -80,3 +81,4 @@ TC_BEGIN(ExtractFirstError, 5)
     //
     static_assert(std::is_same_v<SecondError, ExtractedError>);
 }
+
