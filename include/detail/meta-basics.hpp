@@ -11,6 +11,18 @@ struct If
 {
 };
 
+template <std::int32_t n>
+struct Integer
+{
+    static constexpr std::int32_t value = n;
+};
+
+template <bool val>
+struct Bool
+{
+    static constexpr bool value = val;
+};
+
 struct And
 {
     template <typename... MetaExpr>
@@ -172,4 +184,18 @@ struct ExtractFirstError
     };
 };
 
+struct HasPrintMethod
+{
+    template <typename T, typename = std::void_t<>>
+    struct apply
+    {
+        using type = std::false_type;
+    };
+
+    template <typename T>
+    struct apply<T, decltype(std::declval<T>().print())>
+    {
+        using type = std::true_type;
+    };
+};
 }  // namespace sia::meta
