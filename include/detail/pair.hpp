@@ -41,5 +41,10 @@ struct GetSecond
         using type = Second;
     };
 };
-
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <typename T1, typename T2>
+using Pair = sia::meta::detail::Pair<T1, T2>;
+}

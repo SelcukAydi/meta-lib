@@ -21,6 +21,6 @@ struct VoidFunctor
 
 TEST(Fold, 0)
 {
-    using Result = sia::meta::detail::Fold::apply<VoidFunctor, double, float, char, bool>::type;
+    using Result = sia::meta::detail::FoldImpl::apply<VoidFunctor, double, float, char, bool>::type;
     static_assert(std::is_same_v<char, Result>, "");
 }

@@ -4,7 +4,7 @@
 #include "vector.hpp"
 namespace sia::meta::detail
 {
-struct ForEach
+struct ForEachImpl
 {
     template <typename... Ts>
     struct apply;
@@ -52,5 +52,12 @@ struct ForEach
         using type = typename apply_helper<Set<>, Ts...>::type;
     };
 };
-
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+   using Foreach = sia::meta::detail::ForEachImpl; 
+}
+
+
+

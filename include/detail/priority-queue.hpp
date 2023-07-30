@@ -71,10 +71,10 @@ struct PQPop
 
 struct PQTop
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply<PriorityQueue<Ts...>>
     {
         using type = typename PriorityQueue<Ts...>::top;
@@ -83,14 +83,19 @@ struct PQTop
 
 struct PQSize
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply<PriorityQueue<Ts...>>
     {
         using type = std::integral_constant<std::size_t, sizeof...(Ts)>;
     };
 };
-
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <typename... Ts>
+using PriorityQueue = sia::meta::detail::PriorityQueue<Ts...>;
+}

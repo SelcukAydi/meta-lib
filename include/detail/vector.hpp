@@ -198,17 +198,17 @@ struct FindMax
     template <typename... Ts>
     struct apply
     {
-        template<typename... Items>
+        template <typename... Items>
         struct apply_helper;
 
         template <typename MaxT, typename Item, typename... Tail>
         struct apply_helper<MaxT, Item, Tail...>
         {
-            using type = std::conditional_t<(MaxT::value < Item::value),typename  apply_helper<Item, Tail...>::type,
+            using type = std::conditional_t<(MaxT::value < Item::value), typename apply_helper<Item, Tail...>::type,
                                             typename apply_helper<MaxT, Tail...>::type>;
         };
 
-        template<typename MaxT>
+        template <typename MaxT>
         struct apply_helper<MaxT>
         {
             using type = MaxT;
@@ -218,3 +218,9 @@ struct FindMax
     };
 };
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <typename... Ts>
+using Vector = sia::meta::detail::Vector<Ts...>;
+}

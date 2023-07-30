@@ -70,8 +70,9 @@ struct SetRemove
         template <typename Current, typename... Pack, typename... Items>
         struct apply_helper<Set<Items...>, Current, Pack...>
         {
-            using type = std::conditional_t<std::is_same_v<Current, T>, typename apply_helper<Set<Items...>, Pack...>::type,
-                                            typename apply_helper<Set<Items..., Current>, Pack...>::type>;
+            using type =
+                std::conditional_t<std::is_same_v<Current, T>, typename apply_helper<Set<Items...>, Pack...>::type,
+                                   typename apply_helper<Set<Items..., Current>, Pack...>::type>;
         };
 
         template <typename... Items>
@@ -86,14 +87,19 @@ struct SetRemove
 
 struct SetSize
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply<Set<Ts...>>
     {
         using type = std::integral_constant<std::size_t, sizeof...(Ts)>;
     };
 };
-
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <typename... Ts>
+using Set = sia::meta::detail::Set<Ts...>;
+}

@@ -3,9 +3,9 @@
 #include "exec.hpp"
 namespace sia::meta::detail
 {
-struct Fold
+struct FoldImpl
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
     template <typename F, typename First, typename Second, typename... Ts>
@@ -15,10 +15,15 @@ struct Fold
                                     Ts...>::type;
     };
 
-    template<typename F, typename T>
+    template <typename F, typename T>
     struct apply<F, T>
     {
-        using type = typename F:: template apply<T>::type;
+        using type = typename F::template apply<T>::type;
     };
 };
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+using Fold = sia::meta::detail::FoldImpl;
+}

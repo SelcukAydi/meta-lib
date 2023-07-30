@@ -82,7 +82,8 @@ struct ConversionVectorAddPair
     struct apply<AddT, ConversionVector<Pairs...>>
     {
         using type = std::conditional_t<
-            !std::is_same_v<typename ConversionVectorFindPair::template apply<AddT, ConversionVector<Pairs...>>::type, sia::meta::None>,
+            !std::is_same_v<typename ConversionVectorFindPair::template apply<AddT, ConversionVector<Pairs...>>::type,
+                            sia::meta::None>,
             ConversionVector<Pairs...>, ConversionVector<Pairs..., AddT>>;
     };
 };
@@ -99,3 +100,9 @@ struct ConversionVectorSize
     };
 };
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <typename... Pairs>
+using ConvVector = sia::meta::detail::ConversionVector<Pairs...>;
+}

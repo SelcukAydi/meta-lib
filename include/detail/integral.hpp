@@ -49,10 +49,10 @@ struct IntegralAdd
 
 struct IntegralSub
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<int M, int N>
+    template <int M, int N>
     struct apply<Integral<M>, Integral<N>>
     {
         using type = Integral<M - N>;
@@ -61,10 +61,10 @@ struct IntegralSub
 
 struct IntegralDiv
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<int N, int M>
+    template <int N, int M>
     struct apply<Integral<N>, Integral<M>>
     {
         static_assert(M != 0, "Zero division error!");
@@ -75,10 +75,10 @@ struct IntegralDiv
 
 struct IntegralMul
 {
-    template<typename... Ts>
+    template <typename... Ts>
     struct apply;
 
-    template<int N, int M>
+    template <int N, int M>
     struct apply<Integral<N>, Integral<M>>
     {
         using type = Integral<N * M>;
@@ -88,59 +88,57 @@ struct IntegralMul
 template <int N, int M>
 constexpr typename IntegralAdd::apply<Integral<N>, Integral<M>>::type operator+(Integral<N>, Integral<M>)
 {
-    return typename IntegralAdd::apply<Integral<N>, Integral<M>>::type{}; 
+    return typename IntegralAdd::apply<Integral<N>, Integral<M>>::type{};
 }
-
 
 template <int N, int M>
 constexpr typename IntegralSub::apply<Integral<N>, Integral<M>>::type operator-(Integral<N>, Integral<M>)
 {
-    return typename IntegralSub::apply<Integral<N>, Integral<M>>::type{}; 
+    return typename IntegralSub::apply<Integral<N>, Integral<M>>::type{};
 }
-
 
 template <int N, int M>
 constexpr typename IntegralDiv::apply<Integral<N>, Integral<M>>::type operator/(Integral<N>, Integral<M>)
 {
-    return typename IntegralDiv::apply<Integral<N>, Integral<M>>::type{}; 
+    return typename IntegralDiv::apply<Integral<N>, Integral<M>>::type{};
 }
-
 
 template <int N, int M>
 constexpr typename IntegralMul::apply<Integral<N>, Integral<M>>::type operator*(Integral<N>, Integral<M>)
 {
-    return typename IntegralMul::apply<Integral<N>, Integral<M>>::type{}; 
+    return typename IntegralMul::apply<Integral<N>, Integral<M>>::type{};
 }
-
 
 template <int N>
 constexpr typename IntegralIncrement::apply<Integral<N>>::type operator++(Integral<N>, int)
 {
-    return typename IntegralIncrement::apply<Integral<N>>::type{}; 
+    return typename IntegralIncrement::apply<Integral<N>>::type{};
 }
-
 
 template <int N>
 constexpr typename IntegralDecrement::apply<Integral<N>>::type operator--(Integral<N>, int)
 {
-    return typename IntegralDecrement::apply<Integral<N>>::type{}; 
+    return typename IntegralDecrement::apply<Integral<N>>::type{};
 }
-
 
 template <int N>
 constexpr typename IntegralIncrement::apply<Integral<N>>::type operator++(Integral<N>)
 {
-    return typename IntegralIncrement::apply<Integral<N>>::type{}; 
+    return typename IntegralIncrement::apply<Integral<N>>::type{};
 }
-
 
 template <int N>
 constexpr typename IntegralDecrement::apply<Integral<N>>::type operator--(Integral<N>)
 {
-    return typename IntegralDecrement::apply<Integral<N>>::type{}; 
+    return typename IntegralDecrement::apply<Integral<N>>::type{};
 }
-
-template<int N>
-auto IntegralVar = Integral<N>{};
-
 }  // namespace sia::meta::detail
+
+namespace sia::meta
+{
+template <int N>
+using Integral = sia::meta::detail::Integral<N>;
+
+template <int N>
+auto IntegralVar = sia::meta::detail::Integral<N>{};
+}  // namespace sia::meta
