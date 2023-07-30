@@ -11,7 +11,7 @@ struct ConversionVector
 {
 };
 
-struct FindPair
+struct ConversionVectorFindPair
 {
     template <typename... Ts>
     struct apply;
@@ -39,7 +39,7 @@ struct FindPair
     };
 };
 
-struct ConversionMatrixRemovePair
+struct ConversionVectorRemovePair
 {
     template <typename... Ts>
     struct apply;
@@ -82,7 +82,7 @@ struct ConversionVectorAddPair
     struct apply<AddT, ConversionVector<Pairs...>>
     {
         using type = std::conditional_t<
-            !std::is_same_v<typename FindPair::template apply<AddT, ConversionVector<Pairs...>>::type, sia::meta::None>,
+            !std::is_same_v<typename ConversionVectorFindPair::template apply<AddT, ConversionVector<Pairs...>>::type, sia::meta::None>,
             ConversionVector<Pairs...>, ConversionVector<Pairs..., AddT>>;
     };
 };
