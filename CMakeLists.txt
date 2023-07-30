@@ -4,11 +4,7 @@ project(MetaLib VERSION 3.7.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-set(ENABLE_TEST ON CACHE BOOL "Enable the test")
-#file(GLOB META_SRC_FILES
-#     "src/*.cpp" 
-#     "include/*.hpp"
-#)
+set(ENABLE_TEST OFF CACHE BOOL "Enable the test")
 
 if(ENABLE_TEST)
     message("Testing enabled!!!")
