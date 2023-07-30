@@ -20,6 +20,8 @@ struct None
 {
 };
 
+//TODO(selcuk): Get ride of this.
+//
 template <std::int32_t n>
 struct Integer
 {
@@ -41,6 +43,8 @@ struct RemoveReference
     };
 };
 
+//TODO(selcuk): Move this to traits.
+//
 struct HasPrintMethod
 {
     template <typename T, typename = std::void_t<>>

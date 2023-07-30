@@ -120,26 +120,6 @@ struct AlwaysFalse
     static constexpr bool value = false;
 };
 
-struct NotDefaultConstructibleErrorTag
-{
-    template <typename C>
-    struct apply
-    {
-        static_assert(AlwaysFalse<C>::value, "Class 'C' is not default constructible!");
-        using type = AlwaysFalse<C>;
-    };
-};
-
-struct StandartErrorTag
-{
-    template <typename C>
-    struct apply
-    {
-        // static_assert(AlwaysFalse<C>::value, "Class 'C' is not default constructible!");
-        using type = AlwaysFalse<C>;
-    };
-};
-
 struct IsError
 {
     template <typename... MetaExprs>

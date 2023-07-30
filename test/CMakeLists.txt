@@ -15,7 +15,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 
-include_directories(include, ${CMAKE_SOURCE_DIR}/include)
+include_directories(include ${CMAKE_SOURCE_DIR}/include)
 add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_executable(${PROJECT_NAME} ${META_SRC_FILES}) 

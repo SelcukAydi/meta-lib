@@ -1,3 +1,4 @@
+#include "TestCommonDefs.hpp"
 #include <detail/exec.hpp>
 #include <gtest/gtest.h>
 
@@ -15,13 +16,13 @@ struct ErrorMetaFunctor
     template <typename... Ts>
     struct apply
     {
-        using type = sia::meta::Exec<sia::meta::ConstructError(sia::meta::NotDefaultConstructibleErrorTag)>::type;
+        using type = sia::meta::Exec<sia::meta::ConstructError(NotDefaultConstructibleErrorTag)>::type;
     };
 };
 
 TEST(PropagateErrorTest, 0)
 {
-    using Error = sia::meta::Exec<sia::meta::ConstructError(sia::meta::NotDefaultConstructibleErrorTag)>::type;
+    using Error = sia::meta::Exec<sia::meta::ConstructError(NotDefaultConstructibleErrorTag)>::type;
     using Result = sia::meta::Exec<sia::meta::PropagateError(Error, std::false_type)>::type;
 
     static_assert(std::is_same_v<Result, Error>);

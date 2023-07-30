@@ -1,3 +1,4 @@
+#include "TestCommonDefs.hpp"
 #include "detail/exec.hpp"
 #include <gtest/gtest.h>
 
@@ -6,7 +7,7 @@ TEST(ExtractFirstError, 0)
     // Declaring an error extracted from ExtractFirstError explicity.
     //
     using Result =
-        sia::meta::ExtractFirstError::apply<sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>>::type;
+        sia::meta::ExtractFirstError::apply<sia::meta::Error<NotDefaultConstructibleErrorTag>>::type;
 
     // Result should be an error.
     //
@@ -18,7 +19,7 @@ TEST(ExtractFirstError, 1)
     // Extracting the first error from the executed metafunction's output.
     //
     using ConstractedError =
-        sia::meta::Exec<sia::meta::ConstructError(sia::meta::NotDefaultConstructibleErrorTag)>::type;
+        sia::meta::Exec<sia::meta::ConstructError(NotDefaultConstructibleErrorTag)>::type;
 
     // Extract the first error from the constructed error.
     //
@@ -46,7 +47,7 @@ TEST(ExtractFirstError, 3)
     //
     using ExtractedError =
         sia::meta::ExtractFirstError::apply<std::false_type, std::integral_constant<std::size_t, 99>,
-                                            sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>>::type;
+                                            sia::meta::Error<NotDefaultConstructibleErrorTag>>::type;
 
     static_assert(!std::is_same_v<sia::meta::None, ExtractedError>);
 }
@@ -57,20 +58,20 @@ TEST(ExtractFirstError, 4)
     //
     using ExtractedError =
         sia::meta::ExtractFirstError::apply<std::false_type,
-                                            sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>,
+                                            sia::meta::Error<NotDefaultConstructibleErrorTag>,
                                             std::integral_constant<std::size_t, 99>>::type;
 
     // Assert that if this is the correct error.
     //ac
-    static_assert(std::is_same_v<sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>, ExtractedError>);
+    static_assert(std::is_same_v<sia::meta::Error<NotDefaultConstructibleErrorTag>, ExtractedError>);
 }
 
 TEST(ExtractFirstError, 5)
 {
     // Two errors in the list.
     //
-    using FirstError = sia::meta::Error<sia::meta::NotDefaultConstructibleErrorTag>;
-    using SecondError = sia::meta::Error<sia::meta::StandartErrorTag>;
+    using FirstError = sia::meta::Error<NotDefaultConstructibleErrorTag>;
+    using SecondError = sia::meta::Error<StandartErrorTag>;
 
     // Extract the error.
     //
